@@ -1,0 +1,47 @@
+﻿<Window x:Class="HomeLibrary.View.ReadBookWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HomeLibrary.View"
+        mc:Ignorable="d"
+        Title="ReadBookWindow" Height="300" Width="400">
+    <Window.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="Margin" Value="8" />
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="8" />
+        </Style>
+    </Window.Resources>
+    <Grid Background="#b5b3b0">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="120" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <TextBlock Text="Title" FontWeight="Bold"/>
+        <TextBlock Text="Author" Grid.Row="1" FontWeight="Bold"/>
+        <TextBlock Text="Description" Grid.Row="2" FontWeight="Bold"/>
+        <TextBlock Text="Rating" Grid.Row="3" FontWeight="Bold"/>
+        <TextBlock Text="Number of pages" Grid.Row="4" FontWeight="Bold"/>
+
+        <TextBox Background="#e3e1de" Text="{Binding Title}" Grid.Column="1" />
+        <TextBox Background="#e3e1de" Text="{Binding Author}" Grid.Column="1" Grid.Row="1" />
+        <TextBox Background="#e3e1de" Text="{Binding Description}" Grid.Column="1" Grid.Row="2" TextWrapping="Wrap"/>
+        <TextBox Background="#e3e1de" Text="{Binding Rating}" Grid.Column="1" Grid.Row="3" />
+        <TextBox Background="#e3e1de" Text="{Binding NumberOfPages}" Grid.Column="1" Grid.Row="4" />
+
+        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="5" Grid.Column="1">
+            <Button Background="#424140" Foreground="White" IsDefault="True" Click="Accept_Click" MinWidth="60" Margin="5">OK</Button>
+            <Button Background="#424140" Foreground="White" IsCancel="True" MinWidth="60" Margin="5">Відміна</Button>
+        </StackPanel>
+    </Grid>
+</Window>

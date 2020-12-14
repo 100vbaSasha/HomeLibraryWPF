@@ -1,0 +1,257 @@
+﻿<Window x:Class="HomeLibrary.View.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:oxy="clr-namespace:OxyPlot.Wpf;assembly=OxyPlot.Wpf"
+        xmlns:DV="clr-namespace:System.Windows.Controls.DataVisualization;assembly=System.Windows.Controls.DataVisualization.Toolkit"  
+        xmlns:ChartToolKit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"        
+        mc:Ignorable="d"
+        Title="MainWindow" Height="500" Width="900">
+    <DockPanel Background="#b5b3b0">
+        <TabControl>
+            <TabItem Header="Прочитані">
+                <Grid Background="#b5b3b0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition Height="50" />
+                    </Grid.RowDefinitions>
+                    <ListBox x:Name="readBooksList" ItemsSource="{Binding ReadBooks}" Background="#f2f1f0">
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="BorderThickness" Value="1" />
+                                <Setter Property="BorderBrush" Value="Gray" />
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto"/>
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Column="0" Grid.Row="0" Text="Назва книги: " FontWeight="Bold" FontSize="15"/>
+                                        <TextBlock Grid.Column="0" Grid.Row="1" Text="Автор: " FontWeight="Bold" FontSize="13"/>
+                                        <TextBlock Grid.Column="0" Grid.Row="2" Text="Опис: " FontWeight="Bold" FontSize="13"/>
+                                        <TextBlock Grid.Column="0" Grid.Row="3" Text="Рейтинг: " FontWeight="Bold" FontSize="13"/>
+                                        <TextBlock Grid.Column="0" Grid.Row="4" Text="Кількість сторінок: " FontWeight="Bold" FontSize="13"/>
+                                        <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding Title}" FontSize="15" />
+                                        <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Author}" FontSize="13" />
+                                        <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding Description}" FontSize="13" TextWrapping="Wrap"/>
+                                        <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding Rating}" FontSize="13" />
+                                        <TextBlock Grid.Column="1" Grid.Row="4" Text="{Binding NumberOfPages}" FontSize="13" />
+                                    </Grid>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button Background="#424140" 
+                                Foreground="White" 
+                                Width="70" 
+                                Content="Додати" 
+                                Margin="10" 
+                                Command="{Binding AddReadBookCommand}"  />
+                        <Button Background="#424140" Foreground="White" Width="70" Content="Змінити" Margin="10" Command="{Binding EditReadBookCommand}"
+                    CommandParameter="{Binding ElementName=readBooksList, Path=SelectedItem}"  />
+                        <Button Background="#424140" Foreground="White" Width="70" Content="Видалити" Margin="10" Command="{Binding DeleteReadBookCommand}"
+                    CommandParameter="{Binding ElementName=readBooksList, Path=SelectedItem}"  />
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Актуальні">
+                <Grid Background="#b5b3b0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition Height="50" />
+                    </Grid.RowDefinitions>
+                    <ListBox x:Name="currentBooksList" ItemsSource="{Binding CurrentBooks}" Background="#f2f1f0">
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="BorderThickness" Value="1" />
+                                <Setter Property="BorderBrush" Value="Gray" />
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto"/>
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Column="0" Grid.Row="0" Text="Назва книги: " FontWeight="Bold" FontSize="15"/>
+                                        <TextBlock Grid.Column="0" Grid.Row="1" Text="Автор: " FontWeight="Bold" FontSize="13"/>
+                                        <TextBlock Grid.Column="0" Grid.Row="2" Text="Кількість сторінок: " FontWeight="Bold" FontSize="13"/>
+                                        <TextBlock Grid.Column="0" Grid.Row="3" Text="Кількість прочитаних сторінок: " FontWeight="Bold" FontSize="13"/>
+                                        <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding Title}" FontSize="15" />
+                                        <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Author}" FontSize="13" />
+                                        <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding NumberOfPages}" FontSize="13" />
+                                        <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding NumberOfReadPages}" FontSize="13" />
+                                    </Grid>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button Background="#424140" Foreground="White" Width="70" Content="Додати" Margin="10" Command="{Binding AddCurrentBookCommand}"  />
+                        <Button Background="#424140" Foreground="White" Width="70" Content="Змінити" Margin="10" Command="{Binding EditCurrentBookCommand}"
+                    CommandParameter="{Binding ElementName=currentBooksList, Path=SelectedItem}"  />
+                        <Button Background="#424140" Foreground="White" Width="70" Content="Видалити" Margin="10" Command="{Binding DeleteCurrentBookCommand}"
+                    CommandParameter="{Binding ElementName=currentBooksList, Path=SelectedItem}"  />
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Заплановані">
+                <Grid Background="#b5b3b0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition Height="50" />
+                    </Grid.RowDefinitions>
+                    <ListBox x:Name="plannedBooksList" ItemsSource="{Binding PlannedBooks}" Background="#f2f1f0">
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="BorderThickness" Value="1" />
+                                <Setter Property="BorderBrush" Value="Gray" />
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto"/>
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Column="0" Grid.Row="0" Text="Назва книги: " FontWeight="Bold" FontSize="15"/>
+                                        <TextBlock Grid.Column="0" Grid.Row="1" Text="Автор: " FontWeight="Bold" FontSize="13"/>
+                                        <TextBlock Grid.Column="0" Grid.Row="2" Text="Кількість сторінок: " FontWeight="Bold" FontSize="13"/>
+                                        <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding Title}" FontSize="15" />
+                                        <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Author}" FontSize="13" />
+                                        <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding NumberOfPages}" FontSize="13" />
+                                    </Grid>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button Background="#424140" Foreground="White" Width="70" Content="Додати" Margin="10" Command="{Binding AddPlannedBookCommand}"  />
+                        <Button Background="#424140" Foreground="White" Width="70" Content="Змінити" Margin="10" Command="{Binding EditPlannedBookCommand}"
+                    CommandParameter="{Binding ElementName=plannedBooksList, Path=SelectedItem}"  />
+                        <Button Background="#424140" Foreground="White" Width="70" Content="Видалити" Margin="10" Command="{Binding DeletePlannedBookCommand}"
+                    CommandParameter="{Binding ElementName=plannedBooksList, Path=SelectedItem}"  />
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Статистика">
+                <Grid Background="#b5b3b0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition Height="35" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="220"/>
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <ListBox Grid.Row="0" Grid.Column="0" x:Name="pagesPerDaysList" ItemsSource="{Binding PagesPerDays}" Background="#f2f1f0">
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="BorderThickness" Value="1" />
+                                <Setter Property="BorderBrush" Value="Gray" />
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto"/>
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Column="0" Grid.Row="0" Text="Дата: " FontWeight="Bold" FontSize="13"/>
+                                        <TextBlock Grid.Column="0" Grid.Row="1" Text="Прочитано сторінок: " FontWeight="Bold" FontSize="13"/>
+                                        <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding Date}" FontSize="13" />
+                                        <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Pages}" FontSize="13" />
+                                    </Grid>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button Background="#424140" Foreground="White" Content="Додати" FontSize="12" Width="70" Margin="2" Command="{Binding AddPagesPerDayCommand}"  />
+                        <Button Background="#424140" Foreground="White" Content="Змінити" FontSize="12" Width="70" Margin="2" Command="{Binding EditPagesPerDayCommand}"
+                    CommandParameter="{Binding ElementName=pagesPerDaysList, Path=SelectedItem}"  />
+                        <Button Background="#424140" Foreground="White" Content="Видалити" FontSize="12" Width="70" Margin="2" Command="{Binding DeletePagesPerDayCommand}"
+                    CommandParameter="{Binding ElementName=pagesPerDaysList, Path=SelectedItem}"  />
+                    </StackPanel>
+                    <Grid Grid.Column="1">
+                        <GroupBox  Grid.Row="1" Header="Графік" x:Name="GroupBoxDynamicChart">
+                        </GroupBox>
+                    </Grid>
+                    <StackPanel Grid.Row="1" Grid.Column="1" 
+                                Orientation="Horizontal" 
+                                HorizontalAlignment="Right">
+                        <Button Content="Оновити" 
+                                Background="#424140" 
+                                Foreground="White"
+                                Margin="2"
+                                FontSize="12" 
+                                Width="70"
+                                Height="32"
+                                Command="{Binding UpdateScheduleCommand}"
+                                CommandParameter="{Binding ElementName=GroupBoxDynamicChart}"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Допомога">
+                <Grid Background="#b5b3b0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Margin="40, 20, 40, 10" TextWrapping="Wrap" FontSize="18">
+                        Застосунок для любителів почитати книжки, в якому ти можеш відстежувати, які книжки ти вже прочитав, читаєш або хочеш прочитати в майбутньому.
+                        Також можна наочно побачити скільки сторінок в день ти прочитав, щоб мотивувати себе читати більше.
+                    </TextBlock>
+                    <TextBlock Grid.Row="1" Margin="40, 20, 40, 10" TextWrapping="Wrap" FontSize="18">
+                        У верхній частині головного вікна знаходиться 4 основних вкладки "Прочитані", "Актуальні", "Заплановані","Статистика".
+                    </TextBlock>
+                    <TextBlock Grid.Row="2" Margin="40, 20, 40, 10" TextWrapping="Wrap" FontSize="18">
+                        У вкладках зображені списки книжок, які вже прочитані, читаються на данний момент або заплановані на майбутнє. Кожна книжка містить інформацію про себе.
+                        Щоб додати нову книжку потрібно клацнути на кнопку додати у нижній частині застосунку. Щоб змінити або видалити книжку, потрібно вибрати
+                        потрібну книжку в списку і клацнути на відповідну кнопку на нижній панелі.
+                    </TextBlock>
+                    <TextBlock Grid.Row="3" Margin="40, 20, 40, 10" TextWrapping="Wrap" FontSize="18">
+                        У вкладці статистика розміщений список з кількістю прочитаних книг у відповідні дні. Щоб редагувати список потрібно скористатись кнопкам під ним.
+                        Також поруч зі списком зображений графік, на якому можна відслідковувати кількість прочитаних сторінок щодня.
+                    </TextBlock>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </DockPanel>
+</Window>
